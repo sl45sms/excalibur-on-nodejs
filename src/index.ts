@@ -39,7 +39,7 @@ global.Window = dom.window.constructor as any
 
 global.navigator = { userAgent: 'excalibur/jsdom' } as any
 
-//Cudos to jsdm issue #2154
+//Cudos to jsdom issue #2154
 global.Image = window.Image
 Object.defineProperty((global as any).Image.prototype, 'decode', {
   get() {
@@ -53,4 +53,25 @@ global.XMLHttpRequest = FakeXMLHttpRequest as any
 to make it work on Loader.ts of excaliburjs at `Loader draw function`
 i've comment out the ctx.drawImage
 so need to find a way to make it work without commenting it
+
+also add a timeout make it work
+        setTimeout(() => {
+        if (!this.logoPosition) {
+            ctx.drawImage(this._image, 0, 0, this.logoWidth, this.logoHeight, logoX, logoY - imageHeight - 20, width, imageHeight);
+        }
+        else {
+            ctx.drawImage(this._image, 0, 0, this.logoWidth, this.logoHeight, logoX, logoY, width, imageHeight);
+        }
+        }, 1000);
+so probably is an issue that image is not yet loaded
+
+also this works
+        if (!this.logoPosition) {
+            this._image.onload = () => ctx.drawImage(this._image, 0, 0, this.logoWidth, this.logoHeight, logoX, logoY - imageHeight - 20, width, imageHeight);
+        }
+        else {
+            this._image.onload = () => ctx.drawImage(this._image, 0, 0, this.logoWidth, this.logoHeight, logoX, logoY, width, imageHeight);
+        }
+
+
 */
