@@ -38,14 +38,17 @@ actor.vel.x = 15;
 actor.on('exitviewport', () => {
     //display a message to prove the engine works
     console.log('off screen');
+    //move actor back to the left
+    actor.pos.x = 0;
 });
 
 game.add(actor);
 game.start(loader).then(function () {
   // ready, set, go!
   console.log("ready, set, go!");
+  console.log(window.document.getElementsByTagName("canvas")[0].toDataURL());
   setTimeout(() => {
     //on 10 seconds, get the canvas data to prove a red rectangle is on the screen
     console.log(window.document.getElementsByTagName("canvas")[0].toDataURL());    
-  }, 10000);
+  }, 20000);
 })
